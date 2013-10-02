@@ -6,7 +6,7 @@
 	require "../rb.php";
 	require "AlertBuilder.php";
 	include "../config.php";
-	R::setup('mysql:host=localhost;dbname=brentwal_db1', $dbu, $dbp);
+	R::setup('mysql:host=$dbhost;dbname=$dbname', $dbu, $dbp);
 
 	$action = $_POST['action'];
 	$username = $_POST['username'];

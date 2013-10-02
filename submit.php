@@ -3,7 +3,7 @@
 	require('rb.php');
 	include('config.php');
 
-    R::setup('mysql:host=localhost;dbname=brentwal_db1', $dbu, $dbp);
+    R::setup('mysql:host=$dbhost;dbname=$dbname', $dbu, $dbp);
 
 	$user = R::load('users', $_SESSION['id']);
 
