@@ -1,3 +1,11 @@
+<?php
+  session_start();
+  $error = $_SESSION['error'];
+  if(!empty($_SESSION['error'])) {
+    $_SESSION['error'] = "";
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,6 +29,7 @@
 
       <div class="row">
         <div class="span8 offset2">
+          <?php echo $error ?>
           <h3>Login</h3>
           <form class="form-horizontal" action="controllers/login.php" method="POST">
             <input type="hidden" name="action" value="login">
