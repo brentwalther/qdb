@@ -5,8 +5,8 @@
 
 	require "../rb.php";
 	require "AlertBuilder.php";
-	include "../config.php";
-	R::setup('mysql:host=$dbhost;dbname=$dbname', $dbu, $dbp);
+	require('../config.php');
+	R::setup("mysql:host=$dbhost;dbname=$dbname", $dbu, $dbp);
 
 	$action = $_POST['action'];
 	$username = $_POST['username'];
@@ -45,19 +45,19 @@
 
     $hash = hash("sha256", mt_rand(1000000000,9999999999));
     $salt = $user->salt;
-    $hash = hash("sha256" $hash . $salt);
+    $hash = hash("sha256", $hash . $salt);
 
     require "../utils/sendMail.php";
-    $body = "Hi. Someone has requested this link to reset the password on your account:\n\n"
+    $body = "Hi. Someone has requested this link to reset the password on your account:\n\n";
     $body .= "$rootDomain/reset.php?l=". $hash ."\n\n";
     $body .= "If you did not request this email, simply ignore it.";
 
-    if(sendEmail($user->email, "Reset Password", $body)) {
+    if(sendEmail($user->email, "Reset QDB Password", $body)) {
       $user->resetLink = $hash;
       R::store($user, 'users');
     }
     else {
-      $_SESSION['error'] = AlertBuilder::buildAlert("Email could not be sent.", AlertBuilder::ERROR);
+      $_SESSION['error'] = AlertBuilder::buildAlert("The email could not be sent.", AlertBuilder::ERROR);
       header("Location: /qdb/forgot.php");
       exit();
     }

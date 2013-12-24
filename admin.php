@@ -44,9 +44,9 @@
         	foreach($posts as $post) {
         	  $text = $post->text;
             $stamp = $post->stamp;
-            $author = R::load('users', $post->author)->username;    
+            $author = R::load('users', $post->author)->username;
           		echo "<tr><td><a href='view.php?id=$post->id'>#$post->id</a></td><td>$author</td><td>$stamp</td><td>$text</td></tr>\n";
-        	} 
+        	}
           echo "</table>";
           ?>
         </div>
@@ -57,8 +57,4 @@
       <?php include("footer.php"); ?>
 
     </div>
-
-    <script src="/js/jquery-1.9.0.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-
 </body></html>

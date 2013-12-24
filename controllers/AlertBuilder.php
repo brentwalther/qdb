@@ -9,12 +9,12 @@ class AlertBuilder {
 	const WARNING = 3;
 
 	public static function buildAlert($message, $alertType) {
-		$html = '<div class="alert ';
+		$html = '<div class="alert alert-dismissable ';
 
 		// 'WARNING' isn't defined in the switch because it only needs CSS class 'alert'
 		switch($alertType) {
 			case AlertBuilder::ERROR:
-				$html .= "alert-error";
+				$html .= "alert-danger";
 				break;
 			case AlertBuilder::SUCCESS:
 				$html .= "alert-success";
@@ -23,11 +23,11 @@ class AlertBuilder {
 				$html .= "alert-info";
 				break;
 			default:
-				$html .= "";
+				$html .= "alert-warning";
 		}
 
 		$html .= '">';
-		$html .= '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		$html .= '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
 		$html .= $message;
 		$html .= '</div>';
 
