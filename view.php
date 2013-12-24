@@ -4,7 +4,7 @@
   require('config.php');
 
   R::setup("mysql:host=$dbhost;dbname=$dbname", $dbu, $dbp);
- 
+
   $id = 0;
   $page = $_GET['page'];
   if($page < 1)
@@ -18,9 +18,7 @@
 
   if(isset($_GET['id']) && $_GET['id'] > 0) {
     $id = $_GET['id'];
-    $posts = R::find('post', ' id = ? ', 
-                array( $id )
-               );
+    $posts = R::find('post', ' id = ? ', array( $id ) );
   }
   if(count($posts) == 0) {
     $posts = R::findAll('post'," ORDER BY id DESC LIMIT ". ($start > 0 ? $start."," : "") . $displayedPosts);
@@ -45,12 +43,12 @@
     <meta charset="utf-8">
     <title>Brent's QDB - View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="View funny quotes from the life of Brent">
+    <meta name="author" content="Brent Walther">
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/css/qdb.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/qdb.css" rel="stylesheet">
   </head>
 
   <body>
@@ -60,19 +58,19 @@
     <div class="container">
 
       <div class="row">
-        <div class="span8 offset2">
+        <div class="col-md-8 col-md-offset-2">
 
-          <ul class="breadcrumb">
-            <li class="active"><a href="view.php">View</a></li>
+          <div class="well well-sm">
+            <a href="view.php">View</a>
 <?php if($id > 0) {
-        echo "<li><span class='divider'>-&gt;</span>&nbsp;<a href='view.php?id=$id'>#$id</a></li>";
+        echo "&rarr;&nbsp;<a href='view.php?id=$id'>#$id</a>";
       }?>
-            <li class="pull-right"><?php echo "Showing $displayedPosts of $totalPosts";?></li>
-          </ul>
+            <span class="pull-right"><?php echo "Showing $displayedPosts of $totalPosts";?></span>
+          </div>
 <?php if($id == 0 || $id > $displayedPosts) { ?>
-          <div class="pagination pagination-centered">
-            <ul>
-      <?php 
+          <div>
+            <ul class="pagination pagination-centered">
+      <?php
       echo "<li><a href='view.php?page=". ($page-1 > 0 ? $page-1 : $page)."'>&lt;</a></li>";
       while($pageStart <= $pageEnd) {
               $button = "<li";
@@ -95,7 +93,7 @@
 			    $stamp = $post->stamp;
 			    $author = ($post->anon == "yes" ? "Anonymous" : R::load('users', $post->author)->username);
 			    $anon = $post->anon;
-			    echo "<pre>$text</pre>\n";      
+			    echo "<pre>$text</pre>\n";
           		echo "<h6><a href='view.php?id=$post->id'>#$post->id</a> <small>Posted by $author on $stamp</small></h6>\n";
           		if($i++ != $total) {
           			echo "<hr>\n";

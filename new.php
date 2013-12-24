@@ -1,6 +1,7 @@
 <?php
   session_start();
 
+  $user = NULL;
   if(isset($_SESSION['id'])) {
     require "rb.php";
     include "config.php";
@@ -19,9 +20,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/css/qdb.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/qdb.css" rel="stylesheet">
   </head>
 
   <body>
@@ -30,22 +31,30 @@
 
     <div class="container">
 
-	  <div class="row">
-		<div class="span8 offset2">
-		  <h2>Submit a quote.</h2>
-      <?php if(!$user->id) { ?>
-      <p>You can only post if you're <a href="login.php">logged in</a>. You can still <a href="view.php">view posts</a>, however.</p>
-      <?php } else { ?>
-      <form class="form-horizontal" action="submit.php" method="POST">
-        <textarea rows="10" name="quoteText"></textarea>
-        <label class="checkbox">
-          <input type="checkbox" name="anon"> Post Anonymously
-        </label>
-        <button type="submit" class="btn btn-success">Post</button>
-      </form>
-      <?php } ?>
-	    </div>
-	  </div>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h2>Submit a quote.</h2>
+        <?php if(isset($user)) { ?>
+        <p>You can only post if you're <a href="login.php">logged in</a>. You can still <a href="view.php">view posts</a>, however.</p>
+        <?php } else { ?>
+        <form role="form" class="form-horizontal" action="submit.php" method="POST">
+          <div class="form-group">
+            <textarea class="form-control" rows="10" name="quoteText"></textarea>
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="anon"> Post Anonymously
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-success">Post</button>
+          </div>
+        </form>
+        <?php } ?>
+        </div>
+      </div>
 
       <hr>
 

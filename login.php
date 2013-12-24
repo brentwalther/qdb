@@ -1,7 +1,8 @@
 <?php
   session_start();
-  $error = $_SESSION['error'];
+  $error = "";
   if(!empty($_SESSION['error'])) {
+    $error = $_SESSION['error'];
     $_SESSION['error'] = "";
   }
 ?>
@@ -13,12 +14,12 @@
     <meta charset="utf-8">
     <title>Brent's QDB - Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Brent's Quote Database Login Page">
+    <meta name="author" content="Brent Walther">
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/css/qdb.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/qdb.css" rel="stylesheet">
   </head>
 
   <body>
@@ -28,28 +29,21 @@
     <div class="container">
 
       <div class="row">
-        <div class="span8 offset2">
+        <div class="col-md-8 col-md-offset-2">
           <?php echo $error ?>
           <h3>Login</h3>
-          <form class="form-horizontal" action="controllers/login.php" method="POST">
+          <form role="form" action="controllers/login.php" method="POST">
             <input type="hidden" name="action" value="login">
-            <div class="control-group">
-              <label class="control-label" for="username">Username</label>
-              <div class="controls">
-                <input type="text" name="username" placeholder="Username"><span class="help-inline">Don't have a username? <a href="register.php">Register.</a></span>
-              </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" name="username" placeholder="Username">
+              <span class="help-block">Don't have a username? <a href="register.php">Register.</a></span>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="password">Password</label>
-              <div class="controls">
-                <input type="password" name="password" placeholder="Password">
-              </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
-            <div class="control-group">
-              <div class="controls">
-                <button type="submit" class="btn btn-success">Log in</button>
-              </div>
-            </div>
+            <button type="submit" class="btn btn-success">Log in</button>
           </form>
         </div>
       </div>

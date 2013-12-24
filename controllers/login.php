@@ -12,7 +12,7 @@
 	$username = $_POST['username'];
 	$email = $_POST['email'];
 	$password = $_POST['password'];
-	
+
 	session_start();
 
 	if($action == "login") {
