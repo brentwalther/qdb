@@ -21,6 +21,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="new.php">New</a></li>
         <li><a href="view.php">View</a></li>
+        <li><a href="register.php">Register</a></li>
         <?php echo "<li><a href='$link'>$uAction</a></li>"; ?>
       </ul>
     </div>
