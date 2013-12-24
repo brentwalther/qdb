@@ -20,7 +20,7 @@
   $pageEnd = min($page + 3, $lastPage);
   $pageStart = max($firstPage, $lastPage - 7);
 
-  $posts = [];
+  $posts = array();
   if(isset($_GET['id']) && $_GET['id'] > 0) {
     $id = $_GET['id'];
     $posts = R::find('post', ' id = ? ', array( $id ) );
@@ -57,7 +57,7 @@
         <div class="col-md-8 col-md-offset-2">
 
           <div class="well well-sm">
-            <a href="view.php">View</a> <?php if($id > 0) { echo "&nbsp;&rarr;&nbsp;<a href='view.php?id=$id'>#$id</a>"; }?>
+            <a href="view.php">View</a><?php if($id > 0) { echo "&nbsp;&rarr;&nbsp;<a href='view.php?id=$id'>#$id</a>"; }?>
             <span class="pull-right"><?php echo "Showing $displayedPosts of $totalPosts";?></span>
           </div>
 
