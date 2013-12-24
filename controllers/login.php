@@ -35,6 +35,33 @@
 
 		header("Location: /qdb/");
 	}
+	else if($action == "forgot") {
+    $user = R::findOne('users', ' email = ? ', array($email));
+    if(!$user->id) {
+      $_SESSION['error'] = AlertBuilder::buildAlert("Please check your email.", AlertBuilder::SUCCESS);
+      header("Location: /qdb/forgot.php");
+      exit();
+    }
+
+    $hash = hash("sha256", mt_rand(1000000000,9999999999));
+    $salt = $user->salt;
+    $hash = hash("sha256" $hash . $salt);
+
+    require "../utils/sendMail.php";
+    $body = "Hi. Someone has requested this link to reset the password on your account:\n\n"
+    $body .= "$rootDomain/reset.php?l=". $hash ."\n\n";
+    $body .= "If you did not request this email, simply ignore it.";
+
+    if(sendEmail($user->email, "Reset Password", $body)) {
+      $user->resetLink = $hash;
+      R::store($user, 'users');
+    }
+    else {
+      $_SESSION['error'] = AlertBuilder::buildAlert("Email could not be sent.", AlertBuilder::ERROR);
+      header("Location: /qdb/forgot.php");
+      exit();
+    }
+	}
 	else if($action == "register") {
 
 		$emailCheck = R::findOne('users', ' email = ? ', array($email));

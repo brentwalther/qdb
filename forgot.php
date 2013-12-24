@@ -12,9 +12,9 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>Brent's QDB - Login</title>
+    <title>Brent's QDB - Forgot Password</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Brent's Quote Database Login Page">
+    <meta name="description" content="Brent's Quote Database Forgot Password Page">
     <meta name="author" content="Brent Walther">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -31,20 +31,15 @@
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <?php echo $error ?>
-          <h3>Login</h3>
+          <h3>Forgot Password</h3>
+          <p>Enter your email address. You'll be sent an email with a link to reset your password.</p>
           <form role="form" action="controllers/login.php" method="POST">
-            <input type="hidden" name="action" value="login">
+            <input type="hidden" name="action" value="forgot">
             <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" name="username" placeholder="Username">
-              <span class="help-block">Don't have a username? <a href="register.php">Register.</a></span>
+              <label for="email">Email</label>
+              <input type="text" class="form-control" name="email" placeholder="Email Address">
             </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" name="password" placeholder="Password">
-              <span class="help-block">Forgot your password? <a href="forgot.php">Click here.</a></span>
-            </div>
-            <button type="submit" class="btn btn-success">Log in</button>
+            <button type="submit" class="btn btn-success">Submit</button>
           </form>
         </div>
       </div>
