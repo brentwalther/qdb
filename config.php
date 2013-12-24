@@ -8,5 +8,5 @@
   $rootDomain = "www.brentwalther.net/qdb";
 
 	// Don't change the secret!
-	$secret = "mySuperSecretSeed!!59%%@09lsdjkgn3251"
+	$secret = "mySuperSecretSeed!!59%%@09lsdjkgn3251";
 ?>

@@ -1,7 +1,9 @@
 <?php
   $uAction = "Login";
+  $registerLink = "<li><a href=\"register.php\">Register</a></li>";
   if(isset($_SESSION['id'])) {
     $uAction = "Logout";
+    $registerLink = "";
   }
   $link = strtolower($uAction) .".php";
 ?>
@@ -21,7 +23,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="new.php">New</a></li>
         <li><a href="view.php">View</a></li>
-        <li><a href="register.php">Register</a></li>
+        <?php echo $registerLink; ?>
         <?php echo "<li><a href='$link'>$uAction</a></li>"; ?>
       </ul>
     </div>
