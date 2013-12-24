@@ -1,11 +1,10 @@
 <?php
   session_start();
 
-  $user = NULL;
   if(isset($_SESSION['id'])) {
     require "rb.php";
     include "config.php";
-    R::setup('mysql:host=$dbhost;dbname=$dbname', $dbu, $dbp);
+    R::setup("mysql:host=$dbhost;dbname=$dbname", $dbu, $dbp);
 
     $user = R::load('users', $_SESSION['id']);
   }
@@ -34,7 +33,7 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
         <h2>Submit a quote.</h2>
-        <?php if(isset($user)) { ?>
+        <?php if(!isset($user)) { ?>
         <p>You can only post if you're <a href="login.php">logged in</a>. You can still <a href="view.php">view posts</a>, however.</p>
         <?php } else { ?>
         <form role="form" class="form-horizontal" action="submit.php" method="POST">
