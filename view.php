@@ -68,8 +68,8 @@
             <span class="pull-right"><?php echo "Showing $displayedPosts of $totalPosts";?></span>
           </div>
 <?php if($id == 0 || $id > $displayedPosts) { ?>
-          <div>
-            <ul class="pagination pagination-centered">
+          <div class="text-center">
+            <ul class="pagination">
       <?php
       echo "<li><a href='view.php?page=". ($page-1 > 0 ? $page-1 : $page)."'>&lt;</a></li>";
       while($pageStart <= $pageEnd) {
