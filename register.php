@@ -11,9 +11,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/css/qdb.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/qdb.css" rel="stylesheet">
   </head>
 
   <body>
@@ -23,7 +23,7 @@
     <div class="container">
 
       <div class="row">
-        <div class="span8 offset2">
+        <div class="col-md-8 col-md-offset-2">
           <div id="errors">
             <?php
             if(isset($_SESSION['error'])) {
@@ -33,30 +33,24 @@
             ?>
           </div>
           <h3>Register</h3>
-          <form class="form-horizontal" action="controllers/login.php" method="POST">
+          <form action="controllers/login.php" method="POST">
             <input type="hidden" name="action" value="register">
-            <div class="control-group">
-              <label class="control-label" for="email">Email</label>
-              <div class="controls">
-                <input type="text" name="email" placeholder="Email"><span class="help-inline">To verify unique accounts.</span>
-              </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" class="form-control" name="email" placeholder="Email">
+              <span class="help-block">To verify unique accounts.</span>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="username">Username</label>
-              <div class="controls">
-                <input type="text" name="username" placeholder="Username">
-              </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" name="username" placeholder="Username">
             </div>
-            <div class="control-group">
-              <label class="control-label" for="password">Password</label>
-              <div class="controls">
-                <input type="password" name="password" placeholder="Password"><span class="help-inline">Must be 8 or more characters</span>
-              </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" placeholder="Password">
+              <span class="help-block">Must be 8 or more characters</span>
             </div>
-            <div class="control-group">
-              <div class="controls">
-                <button type="submit" class="btn btn-success">Register</button>
-              </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-success">Register</button>
             </div>
           </form>
         </div>
