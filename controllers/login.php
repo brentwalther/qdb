@@ -53,7 +53,7 @@
     $body .= "If you did not request this email, simply ignore it.";
 
     if(sendEmail($user->email, "Reset QDB Password", $body)) {
-      $user->resetLink = $hash;
+      $user->resetHash = $hash;
       R::store($user, 'users');
       $_SESSION['error'] = AlertBuilder::buildAlert("Please check your email.", AlertBuilder::SUCCESS);
     }
