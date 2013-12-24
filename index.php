@@ -24,6 +24,14 @@
 
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
+          <div id="errors">
+            <?php
+            if(isset($_SESSION['error'])) {
+              echo $_SESSION['error'];
+              unset($_SESSION['error']);
+            }
+            ?>
+          </div>
           <h2>Brent's Quote Database</h1>
           <p>This is where people I know submit funny quotes. It's like a scrapbook of words. You can either <a href="new.php">submit a new quote</a> (you must be logged in!) or <a href="view.php">view quotes</a> that have already been submitted.</p>
         </div>

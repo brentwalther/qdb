@@ -53,7 +53,7 @@
     $body .= "If you did not request this email, simply ignore it.";
 
     if(sendEmail($user->email, "Reset QDB Password", $body)) {
-      $user->resetHash = $hash;
+      $user->reset_hash = $hash;
       R::store($user, 'users');
       $_SESSION['error'] = AlertBuilder::buildAlert("Please check your email.", AlertBuilder::SUCCESS);
     }
@@ -63,6 +63,22 @@
     header("Location: /qdb/forgot.php");
     exit();
 	}
+  else if($action == "reset") {
+    if(!isset($_POST['hash']))
+      exit();
+
+    $user = R::findOne('users', ' reset_hash = ? ', array($_POST['hash']));
+    if(isset($user)) {
+      $hash = hash("sha256", $user->salt . $_POST['password'] . $secret);
+      $user->password = $hash;
+      R::store($user, 'users');
+      $_SESSION['error'] = AlertBuilder::buildAlert("Your password was reset successfully.", AlertBuilder::SUCCESS);
+    }
+    else {
+      $_SESSION['error'] = AlertBuilder::buildAlert("There was an error.", AlertBuilder::ERROR);
+    }
+    header("Location: /qdb/");
+  }
 	else if($action == "register") {
 
 		$emailCheck = R::findOne('users', ' email = ? ', array($email));
