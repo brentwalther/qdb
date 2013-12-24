@@ -38,7 +38,7 @@
 	else if($action == "forgot") {
     $user = R::findOne('users', ' email = ? ', array($email));
     if(!$user->id) {
-      $_SESSION['error'] = AlertBuilder::buildAlert("Please check your email.", AlertBuilder::SUCCESS);
+      $_SESSION['error'] = AlertBuilder::buildAlert("The email could not be sent.", AlertBuilder::ERROR);
       header("Location: /qdb/forgot.php");
       exit();
     }
@@ -55,12 +55,13 @@
     if(sendEmail($user->email, "Reset QDB Password", $body)) {
       $user->resetLink = $hash;
       R::store($user, 'users');
+      $_SESSION['error'] = AlertBuilder::buildAlert("Please check your email.", AlertBuilder::SUCCESS);
     }
     else {
       $_SESSION['error'] = AlertBuilder::buildAlert("The email could not be sent.", AlertBuilder::ERROR);
-      header("Location: /qdb/forgot.php");
-      exit();
     }
+    header("Location: /qdb/forgot.php");
+    exit();
 	}
 	else if($action == "register") {
 
