@@ -6,32 +6,28 @@
   R::setup("mysql:host=$dbhost;dbname=$dbname", $dbu, $dbp);
 
   $id = 0;
-  $page = $_GET['page'];
-  if($page < 1)
+  if(isset($_GET['page']))
+    $page = max($_GET['page'], 1);
+  else
     $page = 1;
 
   $totalPosts = R::count('post');
-  $displayedPosts = ($totalPosts < 10 ? $totalPosts : 10);
-  $start = $displayedPosts * ($page - 1);
-  $pageStart = $page - 2;
-  $pageEnd = $page + 2;
+  $displayedPosts = min($totalPosts, 10);
+  $offset = $displayedPosts * ($page - 1);
 
+  $firstPage = 1;
+  $lastPage = ceil($totalPosts / $displayedPosts);
+  $pageEnd = min($page + 3, $lastPage);
+  $pageStart = max($firstPage, $lastPage - 7);
+
+  $posts = [];
   if(isset($_GET['id']) && $_GET['id'] > 0) {
     $id = $_GET['id'];
     $posts = R::find('post', ' id = ? ', array( $id ) );
   }
   if(count($posts) == 0) {
-    $posts = R::findAll('post'," ORDER BY id DESC LIMIT ". ($start > 0 ? $start."," : "") . $displayedPosts);
+    $posts = R::findAll('post'," ORDER BY id DESC LIMIT ". $displayedPosts ." OFFSET ". $offset);
   }
-
-  if($pageEnd > ceil($totalPosts / $displayedPosts)) {
-    $pageEnd = ceil($totalPosts / $displayedPosts);
-    if(($pageEnd - 4) > 0) {
-      $pageStart = $pageEnd - 4;
-    }
-  }
-  if($pageStart < 1)
-    $pageStart = 1;
 
   $displayedPosts = count($posts);
 ?>
@@ -61,44 +57,42 @@
         <div class="col-md-8 col-md-offset-2">
 
           <div class="well well-sm">
-            <a href="view.php">View</a>
-<?php if($id > 0) {
-        echo "&rarr;&nbsp;<a href='view.php?id=$id'>#$id</a>";
-      }?>
+            <a href="view.php">View</a> <?php if($id > 0) { echo "&nbsp;&rarr;&nbsp;<a href='view.php?id=$id'>#$id</a>"; }?>
             <span class="pull-right"><?php echo "Showing $displayedPosts of $totalPosts";?></span>
           </div>
-<?php if($id == 0 || $id > $displayedPosts) { ?>
-          <div class="text-center">
-            <ul class="pagination">
-      <?php
-      echo "<li><a href='view.php?page=". ($page-1 > 0 ? $page-1 : $page)."'>&lt;</a></li>";
-      while($pageStart <= $pageEnd) {
-              $button = "<li";
-              if($pageStart == $page)
-                $button .= " class='active'";
-              $button .= "><a href='view.php?page=$pageStart'>$pageStart</a></li>";
-              echo $button;
-              $pageStart++;
-      }
-      echo "<li><a href='view.php?page=". ($page+1 <= $pageEnd ? $page+1 : $page)."'>&gt;</a></li>";
-      ?>
-            </ul>
-          </div>
-        <?php
-      }
-        	$i = 0;
-        	$total = count($posts)-1;
-        	foreach($posts as $post) {
-        		$text = $post->text;
-			    $stamp = $post->stamp;
-			    $author = ($post->anon == "yes" ? "Anonymous" : R::load('users', $post->author)->username);
-			    $anon = $post->anon;
-			    echo "<pre>$text</pre>\n";
-          		echo "<h6><a href='view.php?id=$post->id'>#$post->id</a> <small>Posted by $author on $stamp</small></h6>\n";
-          		if($i++ != $total) {
-          			echo "<hr>\n";
-          		}
-        	} ?>
+
+<?php
+          if($id == 0) { ?>
+            <div class="text-center">
+              <ul class="pagination">
+<?php
+                echo "<li><a href='view.php?page=". max(1, $page-1)."'>&lt;</a></li>";
+                while($pageStart <= $pageEnd) {
+                  $button = "<li";
+                  if($pageStart == $page)
+                    $button .= " class='active'";
+                  $button .= "><a href='view.php?page=$pageStart'>$pageStart</a></li>";
+                  echo $button;
+                  $pageStart++;
+                }
+                echo "<li><a href='view.php?page=". min($page+1, $pageEnd) ."'>&gt;</a></li>"; ?>
+              </ul>
+            </div>
+<?php
+          }
+          $i = 0;
+          $total = count($posts)-1;
+          foreach($posts as $post) {
+            $text = $post->text;
+            $stamp = $post->stamp;
+            $author = ($post->anon == "yes" ? "Anonymous" : R::load('users', $post->author)->username);
+            $anon = $post->anon;
+            echo "<pre>$text</pre>\n";
+                echo "<h6><a href='view.php?id=$post->id'>#$post->id</a> <small>Posted by $author on $stamp</small></h6>\n";
+                if($i++ != $total) {
+                  echo "<hr>\n";
+                }
+          } ?>
         </div>
       </div>
 
