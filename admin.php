@@ -24,9 +24,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/css/qdb.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/qdb.css" rel="stylesheet">
   </head>
 
   <body>
@@ -34,9 +34,6 @@
     <?php include("menu.php"); ?>
 
     <div class="container">
-
-      <div class="row">
-        <div class="span8 offset2">
         <?php
         	$i = 0;
         	$total = count($posts)-1;
@@ -45,13 +42,10 @@
         	  $text = $post->text;
             $stamp = $post->stamp;
             $author = R::load('users', $post->author)->username;
-          		echo "<tr><td><a href='view.php?id=$post->id'>#$post->id</a></td><td>$author</td><td>$stamp</td><td>$text</td></tr>\n";
+          		echo "<tr><td><a href='view.php?id=$post->id'>#$post->id</a></td><td>$author</td><td>$stamp</td><td><pre>$text</pre></td></tr>\n";
         	}
           echo "</table>";
           ?>
-        </div>
-      </div>
-
       <hr>
 
       <?php include("footer.php"); ?>
