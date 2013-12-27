@@ -13,6 +13,7 @@
 		$post->stamp = date("F jS, Y,  H:ia T");
 		$post->author = $user->id;
 		$post->anon = (isset($_POST['anon']) ? "yes" : "no");
+		$post->deleted = 0;
 		R::store($post, 'post');
 		header( "Location: view.php?id=$post->id" ) ;
 	}

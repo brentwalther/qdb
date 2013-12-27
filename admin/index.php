@@ -1,13 +1,13 @@
 <?php
   session_start();
-  require('rb.php');
-  include('config.php');
+  require('../rb.php');
+  include('../config.php');
 
   R::setup("mysql:host=$dbhost;dbname=$dbname", $dbu, $dbp);
 
   $user = R::load('users', $_SESSION['id']);
 
-  if($user->admin == 0) {
+  if($user->admin != 1) {
     header("Location: /qdb/");
   }
 
@@ -24,14 +24,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="css/qdb.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="../css/qdb.css" rel="stylesheet">
   </head>
 
   <body>
 
-    <?php include("menu.php"); ?>
+    <?php include("../menu.php"); ?>
 
     <div class="container">
         <?php
@@ -42,13 +42,15 @@
         	  $text = $post->text;
             $stamp = $post->stamp;
             $author = R::load('users', $post->author)->username;
-          		echo "<tr><td><a href='view.php?id=$post->id'>#$post->id</a></td><td>$author</td><td>$stamp</td><td><pre>$text</pre></td></tr>\n";
+          		echo "<tr><td><a href='view.php?id=$post->id'>#$post->id</a></td><td>$author</td><td>$stamp</td><td><pre>$text</pre>";
+              echo "<a href=\"edit.php\">Edit</a> | <a href=\"delete.php\">Delete</a>";
+              echo "</td></tr>\n";
         	}
           echo "</table>";
           ?>
       <hr>
 
-      <?php include("footer.php"); ?>
+      <?php include("../footer.php"); ?>
 
     </div>
 </body></html>

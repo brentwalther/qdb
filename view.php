@@ -11,7 +11,7 @@
   else
     $page = 1;
 
-  $totalPosts = R::count('post');
+  $totalPosts = R::count('post', ' deleted = ?', array('0') );
   $displayedPosts = min($totalPosts, 10);
   $offset = $displayedPosts * ($page - 1);
 
@@ -83,15 +83,18 @@
           $i = 0;
           $total = count($posts)-1;
           foreach($posts as $post) {
+            if($post->deleted == 1) {
+              continue;
+            }
             $text = $post->text;
             $stamp = $post->stamp;
             $author = ($post->anon == "yes" ? "Anonymous" : R::load('users', $post->author)->username);
             $anon = $post->anon;
             echo "<pre>$text</pre>\n";
-                echo "<h6><a href='view.php?id=$post->id'>#$post->id</a> <small>Posted by $author on $stamp</small></h6>\n";
-                if($i++ != $total) {
-                  echo "<hr>\n";
-                }
+            echo "<h6><a href='view.php?id=$post->id'>#$post->id</a> <small>Posted by $author on $stamp</small></h6>\n";
+            if($i++ != $total) {
+              echo "<hr>\n";
+            }
           } ?>
         </div>
       </div>
