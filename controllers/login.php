@@ -71,6 +71,7 @@
     if(isset($user)) {
       $hash = hash("sha256", $user->salt . $_POST['password'] . $secret);
       $user->password = $hash;
+      $user->reset_hash = "";
       R::store($user, 'users');
       $_SESSION['error'] = AlertBuilder::buildAlert("Your password was reset successfully.", AlertBuilder::SUCCESS);
     }
